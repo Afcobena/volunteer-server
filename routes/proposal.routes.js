@@ -61,6 +61,10 @@ router.get("/:id", async (req, res, next) => {
 })
 
 
+// GET "/api/proposals/:id" ruta *POPULATE* para enviar los detalles de una Proposal al /PERFIL.
+
+
+
 // TODO-------------------------Bonus--------------------------------------
 
 // DELETE "/api/proposals/:id" ruta para borrar una Proposal por su id.

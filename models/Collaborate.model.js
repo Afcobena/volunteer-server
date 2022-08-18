@@ -4,7 +4,7 @@ const arrCollaborations = require("../utils/collaborations.js");
 
 const collaborateSchema = new Schema(
   {
-    help: {
+    category: {
       type: String,
       enum: arrCollaborations,
       required: true,

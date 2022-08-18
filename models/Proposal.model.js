@@ -1,14 +1,15 @@
 const { Schema, model } = require("mongoose");
 
 const arrCategory = require("../utils/category.js");
-const arrImages = require("../utils/image.category.js");
 
 const proposalSchema = new Schema(
   {
-    image: {
-      type: String,
-      enum: arrImages,
-      required: true,
+    
+
+    date: {
+      type: Date,
+      min: '09-10-2022',
+      max: '09-10-2022'
     },
 
     title: {

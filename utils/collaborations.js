@@ -1,15 +1,15 @@
 const arrCollaborations = [
-    "Para ayudar en lo que se necesite",
+    "General",
     "Logistica", 
     "Transporte", 
     "Mano de obra",
-    "Servicios Sanitarios", 
-    "Servicios de Seguridad",
-    "Servicios Psicológicos",
-    "Aportación de Comida", 
-    "Aportación de Materiales", 
-    "Aportación Monetaria", 
-    "Aportaciones Varias"
+    "Sanitarios", 
+    "Seguridad",
+    "Psicológicos",
+    "Comida", 
+    "Materiales", 
+    "Dinero", 
+    "Otros"
 ]
 
 module.exports = arrCollaborations;
