@@ -20,6 +20,10 @@ const collaborateSchema = new Schema(
       ref: "Proposal",
     },
 
+    text: {
+      type: String,
+    }
+
   },
   
   {

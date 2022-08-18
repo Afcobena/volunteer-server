@@ -24,11 +24,11 @@ router.post("/", async (req, res, next) => {
 
     /* console.log(req.body) */
 
-    const {image, title, category, text, owner} = req.body
+    const {date, title, category, text, owner} = req.body
 
     try {
         const newProposal = await Proposal.create({
-            image,
+            date,
             title,
             category,
             text,
@@ -85,11 +85,11 @@ router.delete("/:id", async (req, res, next) => {
 router.patch("/:id", async (req, res, next) => {
     
     const {id} = req.params
-    const {image, title, category, text, owner} = req.body
+    const {date, title, category, text, owner} = req.body
 
     try {
         await Proposal.findByIdAndUpdate(id, {
-            image,
+            date,
             title,
             category,
             text,

@@ -5,7 +5,7 @@ const arrCategory = [
     "Deportivo", 
     "Educativo", 
     "Internacional", 
-    "Ocio y Tiempo Libre", 
+    "Ocio", 
     "Protección Civil", 
     "Socio-Sanitario", 
     "Social"
