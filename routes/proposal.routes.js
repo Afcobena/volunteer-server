@@ -19,7 +19,7 @@ router.get("/", async (req, res, next) => {
 });
 
 
-// GET "/api/proposals" ruta para recibir y crear una nueva Proposal.
+// POST "/api/proposal" ruta para recibir y crear una nueva Proposal.
 router.post("/", async (req, res, next) => {
 
     /* console.log(req.body) */
@@ -43,7 +43,7 @@ router.post("/", async (req, res, next) => {
 });
 
 
-// GET "/api/proposals/:id" ruta para enviar todas los detalles de una Proposal en especifico.
+// GET "/api/proposal/:id" ruta para enviar todas los detalles de una Proposal en especifico.
 router.get("/:id", async (req, res, next) => {
 
     /* console.log(req.params) */
@@ -61,13 +61,12 @@ router.get("/:id", async (req, res, next) => {
 })
 
 
-// GET "/api/proposals/:id" ruta *POPULATE* para enviar los detalles de una Proposal al /PERFIL.
+// GET "/api/proposal/:id" ruta *POPULATE* para enviar los detalles de una Proposal al /PERFIL.
 
 
 
-// TODO-------------------------Bonus--------------------------------------
 
-// DELETE "/api/proposals/:id" ruta para borrar una Proposal por su id.
+// DELETE "/api/proposal/:id" ruta para borrar una Proposal por su id.
 router.delete("/:id", async (req, res, next) => {
 
     const {id} = req.params
@@ -81,7 +80,7 @@ router.delete("/:id", async (req, res, next) => {
     }
 })
 
-// PATCH "/api/proposals/:id" ruta para recibir cambios y editar una Proposal por su id.
+// PATCH "/api/proposal/:id" ruta para recibir cambios y editar una Proposal por su id.
 router.patch("/:id", async (req, res, next) => {
     
     const {id} = req.params
@@ -103,7 +102,6 @@ router.patch("/:id", async (req, res, next) => {
     }
 })
 
-// TODO-------------------------Bonus--------------------------------------
 
 
 module.exports = router;
