@@ -62,16 +62,16 @@ router.post("/signup", async (req, res, next) => {
 router.post("/login", async (req, res, next) => {
 
     console.log(req.body)
-    const {username, email, password} = req.body
+    const {/* username,  */email, password} = req.body
 
-    if(!username || !email || !password) {
+    if(/* !username ||  */!email || !password) {
         res.status(400).json({errorMessage: "Debes rellenar todos los campos"})
         return;
     }
 
     try {
         
-        const foundUser = await User.findOne({email: email}, {username: username})
+        const foundUser = await User.findOne({email: email}/* , {username: username} */)
 
         if (foundUser === null) {
             res.status(400).json({errorMessage: "Usuario no registrado"})
@@ -90,7 +90,8 @@ router.post("/login", async (req, res, next) => {
         const payload = {
             _id: foundUser._id,
             email: foundUser.email,
-            username: foundUser.username
+            /* username: foundUser.username, */
+            /* role: foundUser.role */
         }
 
 
