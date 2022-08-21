@@ -9,7 +9,7 @@ const isAuthenticated = require("../middlewares/isAuthenticated")
 router.post("/signup", async (req, res, next) => {
 
     console.log(req.body)
-    const {username, email, password} = req.body
+    const {username, email, password, role} = req.body
 
     if(!username || !email || !password) {
         res.status(400).json({errorMessage: "Debes rellenar todos los campos"})
@@ -38,13 +38,15 @@ router.post("/signup", async (req, res, next) => {
             return;
         }
 
+
         const salt = await bcrypt.genSalt(12)
         const hashPassword = await bcrypt.hash(password, salt)
 
         await User.create({
             username: username,
             email: email,
-            password: hashPassword
+            password: hashPassword,
+            role: role
         })
         res.status(201).json()
 
@@ -62,7 +64,7 @@ router.post("/signup", async (req, res, next) => {
 router.post("/login", async (req, res, next) => {
 
     console.log(req.body)
-    const {/* username,  */email, password} = req.body
+    const {username, email, password, role} = req.body
 
     if(/* !username ||  */!email || !password) {
         res.status(400).json({errorMessage: "Debes rellenar todos los campos"})
@@ -71,7 +73,7 @@ router.post("/login", async (req, res, next) => {
 
     try {
         
-        const foundUser = await User.findOne({email: email}/* , {username: username} */)
+        const foundUser = await User.findOne({email: email})
 
         if (foundUser === null) {
             res.status(400).json({errorMessage: "Usuario no registrado"})
@@ -90,8 +92,8 @@ router.post("/login", async (req, res, next) => {
         const payload = {
             _id: foundUser._id,
             email: foundUser.email,
-            /* username: foundUser.username, */
-            /* role: foundUser.role */
+            username: foundUser.username,
+            role: foundUser.role
         }
 
 
@@ -112,7 +114,7 @@ router.post("/login", async (req, res, next) => {
 router.get("/verify", isAuthenticated, (req, res, next) => {
 
     console.log("aquí verificamos el token")
-    console.log(req.payload)
+    console.log("consoleLog", req.payload)
 
     res.json(req.payload)
 }) 

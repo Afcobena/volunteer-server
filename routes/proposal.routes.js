@@ -1,5 +1,8 @@
 const router = require("express").Router();
 const Proposal = require("../models/Proposal.model")
+const User = require("../models/User.model")
+const Collaborate = require("../models/Collaborate.model")
+
 
 const isAuthenticated = require("../middlewares/isAuthenticated")
 
@@ -9,8 +12,11 @@ const isAuthenticated = require("../middlewares/isAuthenticated")
 // GET "/api/proposal" ruta para enviar todas las Proposals.
 router.get("/", async (req, res, next) => {
 
+    const {owner} = req.body
+
+
     try {
-        const allProposals = await Proposal.find()
+        const allProposals = await Proposal.find().populate(owner)
         res.json(allProposals);
 
     } catch (error) {
@@ -26,8 +32,9 @@ router.get("/", async (req, res, next) => {
 router.post("/", isAuthenticated, async (req, res, next) => {
 
     /* console.log(req.body) */
+    const userId = req.payload._id
 
-    const {date, title, category, text, owner} = req.body
+    const {date, title, category, owner, text} = req.body
 
     try {
         const newProposal = await Proposal.create({
@@ -35,7 +42,7 @@ router.post("/", isAuthenticated, async (req, res, next) => {
             title,
             category,
             text,
-            owner
+            owner: userId
         })
         res.json("creado");
 
@@ -64,8 +71,44 @@ router.get("/:id", isAuthenticated, async (req, res, next) => {
 })
 
 
+//! POPULATE
 // GET "/api/proposal/:id" ruta *POPULATE* para enviar los detalles de una Proposal al /PERFIL.
+router.get("/:id/details", isAuthenticated, async (req, res, next) => {
 
+    /* console.log(req.params) */
+    const {id} = req.params
+
+    const detailsProposal = await Proposal.findById(id).populate("owner")
+
+
+    router.get("/:id", isAuthenticated, async (req, res, next) => {
+
+    /* console.log(req.params) */
+    const {id} = req.params
+
+    try {
+        const detailsProposal = await Proposal.findById(id)
+
+
+        res.json(detailsProposal)
+        
+    } catch (error) {
+        next(error)
+    }
+})
+
+
+
+    try {
+        const detailsProposal = await Proposal.findById(id)
+
+
+        res.json(detailsProposal)
+        
+    } catch (error) {
+        next(error)
+    }
+})
 
 
 
@@ -108,3 +151,149 @@ router.patch("/:id", isAuthenticated, async (req, res, next) => {
 
 
 module.exports = router;
+
+
+/* 
+const router = require("express").Router();
+const Proposal = require("../models/Proposal.model")
+const User = require("../models/User.model")
+
+const isAuthenticated = require("../middlewares/isAuthenticated")
+
+ */
+
+
+// GET "/api/proposal" ruta para enviar todas las Proposals.
+/* router.get("/", async (req, res, next) => {
+
+    try {
+        const allProposals = await Proposal.find()
+        res.json(allProposals);
+
+    } catch (error) {
+        next(error)
+    }
+
+    
+  
+});
+ */
+
+// POST "/api/proposal" ruta para recibir y crear una nueva Proposal.
+/* router.post("/", isAuthenticated, async (req, res, next) => {
+
+    const {date, title, category, text, owner} = req.body
+
+    try {
+        const newProposal = await Proposal.create({
+            date,
+            title,
+            category,
+            text,
+            owner
+        })
+        res.json("creado");
+
+    } catch (error) {
+        next(error)
+    }
+  
+}); */
+
+
+// GET "/api/proposal/:id" ruta para enviar todas los detalles de una Proposal en especifico.
+/* router.get("/:id", isAuthenticated, async (req, res, next) => {
+
+    const {id} = req.params
+
+    try {
+        const detailsProposal = await Proposal.findById(id)
+
+
+        res.json(detailsProposal)
+        
+    } catch (error) {
+        next(error)
+    }
+}) */
+
+
+//! POPULATE
+// GET "/api/proposal/:id" ruta *POPULATE* para enviar los detalles de una Proposal al /PERFIL.
+/* router.get("/:id/details", isAuthenticated, async (req, res, next) => {
+
+    const {id} = req.params
+
+    const detailsProposal = await Proposal.findById(id).populate("owner")
+
+
+    router.get("/:id", isAuthenticated, async (req, res, next) => {
+
+    const {id} = req.params
+
+    try {
+        const detailsProposal = await Proposal.findById(id)
+
+
+        res.json(detailsProposal)
+        
+    } catch (error) {
+        next(error)
+    }
+}) */
+
+
+
+/*     try {
+        const detailsProposal = await Proposal.findById(id)
+
+
+        res.json(detailsProposal)
+        
+    } catch (error) {
+        next(error)
+    }
+}) */
+
+
+
+// DELETE "/api/proposal/:id" ruta para borrar una Proposal por su id.
+/* router.delete("/:id", isAuthenticated, async (req, res, next) => {
+
+    const {id} = req.params
+
+    try {
+        await Proposal.findByIdAndDelete(id)
+
+        res.status(200).json("Elemento Borrado")
+    } catch (error) {
+        next(error)
+    }
+}) */
+
+// PATCH "/api/proposal/:id" ruta para recibir cambios y editar una Proposal por su id.
+/* router.patch("/:id", isAuthenticated, async (req, res, next) => {
+    
+    const {id} = req.params
+    const {date, title, category, text, owner} = req.body
+
+    try {
+        await Proposal.findByIdAndUpdate(id, {
+            date,
+            title,
+            category,
+            text,
+            owner
+        })
+
+        res.json("Elemento editado")
+
+    } catch (error) {
+        next(error)
+    }
+})
+
+
+
+module.exports = router; */
+
