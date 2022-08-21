@@ -8,13 +8,13 @@ const isAuthenticated = require("../middlewares/isAuthenticated")
 
 
 
-// GET "/api/collaborate" ruta para enviar todas las Collaborate.
+// GET "/api/collaborate" ruta para ver todos los Collaborate.
 router.get("/", async (req, res, next) => {
 
     const {owner, proposal} = req.body
 
     try {
-        const allCollaborate = await Proposal.find().populate(owner).populate(proposal)
+        const allCollaborate = await Collaborate.find().populate(owner).populate(proposal)
         res.json(allCollaborate);
 
     } catch (error) {
@@ -26,23 +26,20 @@ router.get("/", async (req, res, next) => {
 });
 
 
-// POST "/api/collaborate" ruta para recibir y crear una nueva Collaborate.
-router.post("/", isAuthenticated, async (req, res, next) => {
+// POST "/api/collaborate" ruta para crear un nuevo Collaborate.
+router.post("/", /* isAuthenticated, */ async (req, res, next) => {
 
-    console.log(req.body)
-
-    const {category, proposal, text} = req.body
-
-    const userId = req.payload._id
-
+    const {id} = req.params
+    /* console.log(req.body) */
+    const {category, proposal, owner, text} = req.body
 
     try {
+        await Proposal.findById(id)
         const newCollaborate = await Collaborate.create({
             category,
-            owner: userId,
-            proposal,
             text,
-        })
+        })/* .populate("proposal").populate("owner") */
+        console.log("creado un collaborate")
         res.json("creado");
 
     } catch (error) {
@@ -71,47 +68,12 @@ router.get("/:id",/*  isAuthenticated, */ async (req, res, next) => {
 
 //! POPULATE
 // GET "/api/collaborate/:id" ruta *Collaborate* para enviar los detalles de una Collaborate al /PERFIL.
-router.get("/:id/details", isAuthenticated, async (req, res, next) => {
 
-    /* console.log(req.params) */
-    const {id} = req.params
-
-    const detailsCollaborate = await Collaborate.findById(id).populate("owner")
-
-
-    router.get("/:id", isAuthenticated, async (req, res, next) => {
-
-    /* console.log(req.params) */
-    const {id} = req.params
-
-    try {
-        const detailsCollaborate = await Collaborate.findById(id)
-
-
-        res.json(detailsCollaborate)
-        
-    } catch (error) {
-        next(error)
-    }
-})
-
-
-
-    try {
-        const detailsCollaborate = await Collaborate.findById(id)
-
-
-        res.json(detailsCollaborate)
-        
-    } catch (error) {
-        next(error)
-    }
-})
 
 
 
 // DELETE "/api/collaborate/:id" ruta para borrar una Collaborate por su id.
-router.delete("/:id", isAuthenticated, async (req, res, next) => {
+router.delete("/:id", /* isAuthenticated, */ async (req, res, next) => {
 
     const {id} = req.params
 
@@ -125,7 +87,7 @@ router.delete("/:id", isAuthenticated, async (req, res, next) => {
 })
 
 // PATCH "/api/collaborate/:id" ruta para recibir cambios y editar una Collaborate por su id.
-router.patch("/:id", isAuthenticated, async (req, res, next) => {
+router.patch("/:id", /* isAuthenticated, */ async (req, res, next) => {
     
     const {id} = req.params
     const {date, title, category, text, owner} = req.body

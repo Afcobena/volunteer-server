@@ -8,8 +8,7 @@ const arrCollaborations = [
     "Psicológicos",
     "Comida", 
     "Materiales", 
-    "Dinero", 
-    "Otros"
+    "Dinero"
 ]
 
 module.exports = arrCollaborations;

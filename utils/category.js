@@ -7,7 +7,7 @@ const arrCategory = [
     "Internacional", 
     "Ocio", 
     "Protección Civil", 
-    "Socio-Sanitario", 
+    "Socio Sanitario", 
     "Social"
 ]
 

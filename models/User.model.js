@@ -23,7 +23,17 @@ const userSchema = new Schema(
       type: String,
       enum: ["user", "admin"],
       default: "user"
-    }
+    },
+
+    proposal: {
+      type: Schema.Types.ObjectId,
+      ref: "Proposal",
+    },
+
+    collaborate: {
+      type: Schema.Types.ObjectId,
+      ref: "Collaborate",
+    },
   },
   {
     timestamps: true,
