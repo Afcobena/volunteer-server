@@ -113,8 +113,8 @@ router.post("/login", async (req, res, next) => {
 // GET "/api/auth/verify" verificar que el User ya ha sido validado y está activo.
 router.get("/verify", isAuthenticated, (req, res, next) => {
 
-    console.log("aquí verificamos el token")
-    console.log("consoleLog", req.payload)
+    /* console.log("aquí verificamos el token")
+    console.log("consoleLog", req.payload) */
 
     res.json(req.payload)
 }) 

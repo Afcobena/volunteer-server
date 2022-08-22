@@ -33,8 +33,7 @@ router.post("/", isAuthenticated, async (req, res, next) => {
 
     /* console.log(req.body) */
     const userId = req.payload._id
-
-    const {date, title, category, owner, text} = req.body
+    const {date, title, category, text} = req.body
 
     try {
         const newProposal = await Proposal.create({
@@ -44,12 +43,10 @@ router.post("/", isAuthenticated, async (req, res, next) => {
             text,
             owner: userId
         })
-        res.json("creado");
-
+        res.json(newProposal);
     } catch (error) {
         next(error)
     }
-  
 });
 
 
@@ -60,9 +57,13 @@ router.get("/:id", isAuthenticated, async (req, res, next) => {
     const {id} = req.params
 
     try {
-        const detailsProposal = await Proposal.findById(id)
+        const detailsProposal = await Proposal.findById(id)/* .populate("owner") */
+
+        console.log("DETAILS", detailsProposal)
+        /* const proposalCollaborations = await Collaborate.find({proposal: id}).populate("owner") */
 
 
+        /* res.json({detailsProposal, proposalCollaborations}) */
         res.json(detailsProposal)
         
     } catch (error) {
@@ -71,26 +72,20 @@ router.get("/:id", isAuthenticated, async (req, res, next) => {
 })
 
 
-//! POPULATE
+//! PERFIL
 // GET "/api/proposal/:id" ruta *POPULATE* para enviar los detalles de una Proposal al /PERFIL.
-router.get("/:id/details", isAuthenticated, async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
 
-    /* console.log(req.params) */
-    const {id} = req.params
-
-    const detailsProposal = await Proposal.findById(id).populate("owner")
-
-
-    router.get("/:id", isAuthenticated, async (req, res, next) => {
-
-    /* console.log(req.params) */
     const {id} = req.params
 
     try {
-        const detailsProposal = await Proposal.findById(id)
+        const detailsProposal = await Proposal.findById(id).populate("owner")
 
+        const detailsOwner = await User.findById(id).populate("proposal")
 
-        res.json(detailsProposal)
+        console.log("DETAILS", detailsProposal, detailsOwner)
+
+        res.json({detailsProposal, detailsOwner})
         
     } catch (error) {
         next(error)
@@ -99,16 +94,7 @@ router.get("/:id/details", isAuthenticated, async (req, res, next) => {
 
 
 
-    try {
-        const detailsProposal = await Proposal.findById(id)
 
-
-        res.json(detailsProposal)
-        
-    } catch (error) {
-        next(error)
-    }
-})
 
 
 

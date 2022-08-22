@@ -33,6 +33,11 @@ const proposalSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+
+    collaborate: {
+      type: Schema.Types.ObjectId,
+      ref: "Collaborate",
+    },
   },
   
   {

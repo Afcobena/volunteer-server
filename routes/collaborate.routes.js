@@ -11,42 +11,41 @@ const isAuthenticated = require("../middlewares/isAuthenticated")
 // GET "/api/collaborate" ruta para ver todos los Collaborate.
 router.get("/", async (req, res, next) => {
 
-    const {owner, proposal} = req.body
+    const {owner} = req.body
 
     try {
-        const allCollaborate = await Collaborate.find().populate(owner).populate(proposal)
+        const allCollaborate = await Collaborate.find().populate(owner)/* .populate(proposal) */
         res.json(allCollaborate);
 
     } catch (error) {
         next(error)
     }
-
-    
-  
 });
 
 
 // POST "/api/collaborate" ruta para crear un nuevo Collaborate.
-router.post("/", /* isAuthenticated, */ async (req, res, next) => {
+router.post("/:id", isAuthenticated, async (req, res, next) => {
 
     const {id} = req.params
-    /* console.log(req.body) */
-    const {category, proposal, owner, text} = req.body
+    const userId = req.payload._id
+    const {category, text} = req.body
 
     try {
-        await Proposal.findById(id)
+        /* await Proposal.findById(id) */
         const newCollaborate = await Collaborate.create({
             category,
             text,
-        })/* .populate("proposal").populate("owner") */
+            owner: userId,
+            proposal: id,
+        })
         console.log("creado un collaborate")
-        res.json("creado");
-
+        res.json(newCollaborate);
     } catch (error) {
         next(error)
     }
-  
 });
+
+
 
 
 // GET "/api/collaborate/:id" ruta para enviar todas los detalles de una Collaborate.
