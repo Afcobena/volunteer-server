@@ -7,10 +7,15 @@ const proposalSchema = new Schema(
     
 
     date: {
+      type: String
+    },
+
+/*     date: {
       type: Date,
       min: '09/10',
       max: '09/10/2022'
-    },
+    }, */
+
 
     title: {
       type: String,

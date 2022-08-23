@@ -3,18 +3,22 @@ const Collaborate = require("../models/Collaborate.model")
 const Proposal = require("../models/Proposal.model")
 const User = require("../models/User.model")
 
-const isAuthenticated = require("../middlewares/isAuthenticated")
+const isAuthenticated = require("../middlewares/isAuthenticated");
+const arrCollaborations = require("../utils/collaborations");
 
 
 
 
 // GET "/api/collaborate" ruta para ver todos los Collaborate.
-router.get("/", async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
 
-    const {owner} = req.body
+    /* const {owner} = req.body */
+
+    const {id} = req.params
 
     try {
-        const allCollaborate = await Collaborate.find().populate(owner)/* .populate(proposal) */
+        const allCollaborate = await Collaborate.find({proposal: id})/* .populate("owner") */
+        /* console.log("TIENE ESTO", allCollaborate) */
         res.json(allCollaborate);
 
     } catch (error) {
