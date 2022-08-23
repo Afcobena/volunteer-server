@@ -4,7 +4,6 @@ const Proposal = require("../models/Proposal.model")
 const Collaborate = require("../models/Collaborate.model")
 
 const isAuthenticated = require("../middlewares/isAuthenticated");
-const isOwner = require("../middlewares/isOwner");
 
 router.get("/", isAuthenticated ,async (req, res, next) => {
 

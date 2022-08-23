@@ -69,12 +69,6 @@ router.get("/:id",/*  isAuthenticated, */ async (req, res, next) => {
 })
 
 
-//! POPULATE
-// GET "/api/collaborate/:id" ruta *Collaborate* para enviar los detalles de una Collaborate al /PERFIL.
-
-
-
-
 // DELETE "/api/collaborate/:id" ruta para borrar una Collaborate por su id.
 router.delete("/:id", /* isAuthenticated, */ async (req, res, next) => {
 
