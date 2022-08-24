@@ -23,20 +23,37 @@ router.get("/", isAuthenticated ,async (req, res, next) => {
 })
 
 
-/* router.get("/", isAuthenticated ,async (req, res, next) => {
+router.get("/collaborates", isAuthenticated ,async (req, res, next) => {
 
     const userId = req.payload._id
-    console.log("QUE ES", userID)
+
     
     try {
         const userCollabs = await Collaborate.find({owner: userId})
-        console.log("ESTA COSA ES PROFILE", userCollabs)
+        res.json(userCollabs)
+        
+    } catch (error) {
+        next(error)
+    }
+})
+
+
+
+/* router.get("/collaborates/:id", async (req, res, next) => {
+
+    const {id} = req.params
+    
+    try {
+        const userCollabs = await Collaborate.find({owner: id})
         res.json(userCollabs)
         
     } catch (error) {
         next(error)
     }
 }) */
+
+
+/* $addToSet hacerlo con un patch del user */
 
 
 /* router.get("/", isAuthenticated ,async (req, res, next) => {

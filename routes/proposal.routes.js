@@ -2,10 +2,11 @@ const router = require("express").Router();
 const Proposal = require("../models/Proposal.model")
 const User = require("../models/User.model")
 const Collaborate = require("../models/Collaborate.model")
-const isOwner = require("../middlewares/isOwner");
 
 
 const isAuthenticated = require("../middlewares/isAuthenticated")
+/* const unObjeto = require("../middlewares/isOwner/");
+ */const {isOwner} = require("../middlewares/isOwner");
 
 
 
@@ -20,6 +21,12 @@ router.get("/", async (req, res, next) => {
         const allProposals = await Proposal.find().populate(owner)
         res.json(allProposals);
 
+    } catch (error) {
+        next(error)
+    }
+
+    try {
+        
     } catch (error) {
         next(error)
     }
@@ -100,7 +107,7 @@ router.get("/:id", async (req, res, next) => {
 
 
 // DELETE "/api/proposal/:id" ruta para borrar una Proposal por su id.
-router.delete("/:id", isAuthenticated, async (req, res, next) => {
+router.delete("/:id", isAuthenticated, isOwner, async (req, res, next) => {
 
     const {id} = req.params
 
@@ -114,7 +121,7 @@ router.delete("/:id", isAuthenticated, async (req, res, next) => {
 })
 
 // PATCH "/api/proposal/:id" ruta para recibir cambios y editar una Proposal por su id.
-router.patch("/:id", isAuthenticated, async (req, res, next) => {
+router.patch("/:id", isAuthenticated, isOwner, async (req, res, next) => {
     
     const {id} = req.params
     const {date, title, category, text, owner} = req.body

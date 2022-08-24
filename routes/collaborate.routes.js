@@ -17,7 +17,7 @@ router.get("/:id", async (req, res, next) => {
     const {id} = req.params
 
     try {
-        const allCollaborate = await Collaborate.find({proposal: id})/* .populate("owner") */
+        const allCollaborate = await Collaborate.find({proposal: id})
         /* console.log("TIENE ESTO", allCollaborate) */
         res.json(allCollaborate);
 
@@ -35,7 +35,6 @@ router.post("/:id", isAuthenticated, async (req, res, next) => {
     const {category, text} = req.body
 
     try {
-        /* await Proposal.findById(id) */
         const newCollaborate = await Collaborate.create({
             category,
             text,
