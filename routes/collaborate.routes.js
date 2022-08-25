@@ -17,7 +17,7 @@ router.get("/:id", async (req, res, next) => {
     const {id} = req.params
 
     try {
-        const allCollaborate = await Collaborate.find({proposal: id})
+        const allCollaborate = await Collaborate.find({proposal: id}).populate("owner")
         /* console.log("TIENE ESTO", allCollaborate) */
         res.json(allCollaborate);
 

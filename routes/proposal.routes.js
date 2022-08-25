@@ -5,8 +5,7 @@ const Collaborate = require("../models/Collaborate.model")
 
 
 const isAuthenticated = require("../middlewares/isAuthenticated")
-/* const unObjeto = require("../middlewares/isOwner/");
- */const {isOwner} = require("../middlewares/isOwner");
+const {isOwner} = require("../middlewares/isOwner");
 
 
 
@@ -14,11 +13,11 @@ const isAuthenticated = require("../middlewares/isAuthenticated")
 // GET "/api/proposal" ruta para enviar todas las Proposals.
 router.get("/", async (req, res, next) => {
 
-    const {owner} = req.body
+    /* const {owner} = req.body */
 
 
     try {
-        const allProposals = await Proposal.find().populate(owner)
+        const allProposals = await Proposal.find().populate("owner")
         res.json(allProposals);
 
     } catch (error) {
@@ -65,7 +64,7 @@ router.get("/:id", isAuthenticated, async (req, res, next) => {
     const {id} = req.params
 
     try {
-        const detailsProposal = await Proposal.findById(id)/* .populate("owner") */
+        const detailsProposal = await Proposal.findById(id).populate("owner")
 
         console.log("DETAILS", detailsProposal)
         /* const proposalCollaborations = await Collaborate.find({proposal: id}).populate("owner") */
@@ -99,10 +98,6 @@ router.get("/:id", async (req, res, next) => {
         next(error)
     }
 })
-
-
-
-
 
 
 
