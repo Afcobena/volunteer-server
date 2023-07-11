@@ -8,6 +8,26 @@ const isAuthenticated = require("../middlewares/isAuthenticated")
 const {isOwner} = require("../middlewares/isOwner");
 
 
+// POST "/api/proposal" ruta para recibir y crear una nueva Proposal.
+router.post("/", isAuthenticated, async (req, res, next) => {
+
+    /* console.log(req.body) */
+    const userId = req.payload._id
+    const {date, title, category, text} = req.body
+
+    try {
+        const newProposal = await Proposal.create({
+            date,
+            title,
+            category,
+            text,
+            owner: userId
+        })
+        res.json(newProposal);
+    } catch (error) {
+        next(error)
+    }
+});
 
 
 // GET "/api/proposal" ruta para enviar todas las Proposals.
@@ -32,28 +52,6 @@ router.get("/", async (req, res, next) => {
 
     
   
-});
-
-
-// POST "/api/proposal" ruta para recibir y crear una nueva Proposal.
-router.post("/", isAuthenticated, async (req, res, next) => {
-
-    /* console.log(req.body) */
-    const userId = req.payload._id
-    const {date, title, category, text} = req.body
-
-    try {
-        const newProposal = await Proposal.create({
-            date,
-            title,
-            category,
-            text,
-            owner: userId
-        })
-        res.json(newProposal);
-    } catch (error) {
-        next(error)
-    }
 });
 
 
