@@ -1,14 +1,13 @@
 const arrCategory = [
-    "Ambiental", 
-    "Comunitario", 
+    "Civil Protection", 
+    "Community", 
     "Cultural", 
-    "Deportivo", 
-    "Educativo", 
-    "Internacional", 
-    "Ocio", 
-    "Protección Civil", 
-    "Socio Sanitario", 
-    "Social"
+    "Educational",
+    "Environmental", 
+    "Leisure", 
+    "Sports", 
+    "Social Healthcare", 
+    "Social Events",
 ]
 
 module.exports = arrCategory;

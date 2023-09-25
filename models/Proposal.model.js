@@ -34,6 +34,16 @@ const proposalSchema = new Schema(
       required: true,
     },
 
+    requiredAmount: {
+      type: Number,
+      default: 0,
+
+    },
+
+    donated: {
+
+    },
+
     owner: {
       type: Schema.Types.ObjectId,
       ref: "User",
