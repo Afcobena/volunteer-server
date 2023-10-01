@@ -6,7 +6,19 @@ const profileRoutes = require("./profile.routes")
 
 
 router.get("/", (req, res, next) => {
-  res.json("All good in here");
+  const htmlResponse = 
+  `
+  <html>
+
+    <head>
+      <title>Volunteer Server App</title>
+    </head>
+    <body>
+      <h1>Volunteer Server Running</h1>
+    </body>
+  </html>
+  `;
+  res.send(htmlResponse).json("All good in here");
 });
 
 router.use("/auth", authRoutes)
