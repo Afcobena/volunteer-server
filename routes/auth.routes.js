@@ -3,9 +3,15 @@ const User = require("../models/User.model")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 
-
-
 const isAuthenticated = require("../middlewares/isAuthenticated")
+
+const cors = require("cors");
+
+
+router.use(cors({
+    credentials: true,
+    origin: 'http://localhost:3000', // O cambia según tu origen permitido
+  }));
 
 // POST "/api/auth/signup" ruta para recibir y crear un nuevo User..
 router.post("/signup", async (req, res, next) => {
