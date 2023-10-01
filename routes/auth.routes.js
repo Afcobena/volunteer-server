@@ -3,6 +3,8 @@ const User = require("../models/User.model")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 
+
+
 const isAuthenticated = require("../middlewares/isAuthenticated")
 
 // POST "/api/auth/signup" ruta para recibir y crear un nuevo User..

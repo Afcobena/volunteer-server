@@ -1,4 +1,48 @@
-// We reuse this import in order to have access to the `body` property in requests
+const express = require("express");
+const logger = require("morgan");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+/* const origin =  process.env.ORIGIN */
+
+module.exports = (app) => {
+  app.set("trust proxy", 1);
+
+  // Middleware para establecer las cabeceras CORS
+  app.use(function (req, res, next) {
+    // Website you wish to allow to connect
+    res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000"); // Cambiado a tu origen permitido
+
+    // Request methods you wish to allow
+    res.setHeader(
+      "Access-Control-Allow-Methods",
+      "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+    );
+
+    // Request headers you wish to allow
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "X-Requested-With,content-type"
+    );
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader("Access-Control-Allow-Credentials", true);
+
+    // Pass to next layer of middleware
+    next();
+  });
+
+  app.use(logger("dev"));
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: false }));
+  app.use(cookieParser());
+
+  // ... Definición de tus rutas aquí
+};
+
+
+
+/* // We reuse this import in order to have access to the `body` property in requests
 const express = require("express");
 
 // ℹ️ Responsible for the messages you see in the terminal as requests are coming in
@@ -35,3 +79,4 @@ module.exports = (app) => {
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
 };
+ */
