@@ -2,43 +2,30 @@ const express = require("express");
 const logger = require("morgan");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-/* const origin =  process.env.ORIGIN */
 
-module.exports = (app) => {
-  app.set("trust proxy", 1);
+const app = express();
 
-  // Middleware para establecer las cabeceras CORS
-  app.use(function (req, res, next) {
-    // Website you wish to allow to connect
-    res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000"); // Cambiado a tu origen permitido
+app.set("trust proxy", 1);
 
-    // Request methods you wish to allow
-    res.setHeader(
-      "Access-Control-Allow-Methods",
-      "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-    );
+// Middleware para establecer las cabeceras CORS
+app.use(cors({
+  credentials: true,
+  origin: 'http://localhost:3000', // O cambia según tu origen permitido
+}));
 
-    // Request headers you wish to allow
-    res.setHeader(
-      "Access-Control-Allow-Headers",
-      "X-Requested-With,content-type"
-    );
+app.use(logger("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader("Access-Control-Allow-Credentials", true);
+// Importa y usa tus rutas desde otro archivo
+const routes = require("./routes");  // Ajusta la ruta del archivo de rutas
+app.use("/", routes);
 
-    // Pass to next layer of middleware
-    next();
-  });
-
-  app.use(logger("dev"));
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: false }));
-  app.use(cookieParser());
-
-  // ... Definición de tus rutas aquí
-};
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
 
 
 

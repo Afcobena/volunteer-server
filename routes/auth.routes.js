@@ -1,17 +1,17 @@
-const router = require("express").Router();
-const User = require("../models/User.model")
-const bcrypt = require("bcryptjs")
-const jwt = require("jsonwebtoken")
+const express = require("express");
+const router = express.Router();
+const cors = require("cors");  // Importa el middleware de CORS
+const User = require("../models/User.model");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
-const isAuthenticated = require("../middlewares/isAuthenticated")
+const isAuthenticated = require("../middlewares/isAuthenticated");
 
-const cors = require("cors");
-
-
+// Middleware para establecer las cabeceras CORS para esta ruta específica
 router.use(cors({
-    credentials: true,
-    origin: 'http://localhost:3000', // O cambia según tu origen permitido
-  }));
+  credentials: true,
+  origin: 'http://localhost:3000', // O cambia según tu origen permitido
+}));
 
 // POST "/api/auth/signup" ruta para recibir y crear un nuevo User..
 router.post("/signup", async (req, res, next) => {
