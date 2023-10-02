@@ -3,12 +3,13 @@ const User = require("../models/User.model")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const cors = require("cors")
+const app = express()
 
 const corsPolicy = require("../middlewares/corsPolicy")
 
 const isAuthenticated = require("../middlewares/isAuthenticated")
 
-var corsOptions = {
+const corsOptions = {
     origin: 'http://localhost:3000',
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
   }
