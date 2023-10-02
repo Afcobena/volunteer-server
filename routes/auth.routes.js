@@ -16,6 +16,7 @@ const corsOptions = {
 
 
 app.use(cors())
+app.options('/post/login', cors())
 
 
 // POST "/api/auth/signup" ruta para recibir y crear un nuevo User..
