@@ -8,10 +8,17 @@ const corsPolicy = require("../middlewares/corsPolicy")
 
 const isAuthenticated = require("../middlewares/isAuthenticated")
 
+var corsOptions = {
+    origin: 'http://localhost:3000',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  }
+
+
 app.use(cors())
 
+
 // POST "/api/auth/signup" ruta para recibir y crear un nuevo User..
-router.post("/signup", cors(), async (req, res, next) => {
+router.post("/signup", cors(corsOptions), async (req, res, next) => {
 
     console.log(req.body)
     const {username, email, password, role} = req.body
@@ -66,7 +73,7 @@ router.post("/signup", cors(), async (req, res, next) => {
 
 
 // POST "/api/auth/login" ruta para mandar las credenciales del User.
-router.post("/login", cors(), async (req, res, next) => {
+router.post("/login", cors(corsOptions), async (req, res, next) => {
 
     console.log("ESTE ES EL REQ.BODY:",req.body)
     const {username, email, password, role} = req.body
@@ -116,7 +123,7 @@ router.post("/login", cors(), async (req, res, next) => {
 })
 
 // GET "/api/auth/verify" verificar que el User ya ha sido validado y está activo.
-router.get("/verify", isAuthenticated, cors(), (req, res, next) => {
+router.get("/verify", isAuthenticated, cors(corsOptions), (req, res, next) => {
 
     console.log("aquí verificamos el token")
     console.log("consoleLog", req.payload)
