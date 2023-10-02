@@ -11,12 +11,12 @@ const isAuthenticated = require("../middlewares/isAuthenticated")
 
 const corsOptions = {
     origin: 'http://localhost:3000',
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+    optionsSuccessStatus: 200 // 
   }
 
 
-app.use(cors())
-app.options('/post/login', cors())
+app.use(cors(corsOptions))
+app.options('/post/login', cors(corsOptions))
 
 
 // POST "/api/auth/signup" ruta para recibir y crear un nuevo User..
