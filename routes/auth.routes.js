@@ -25,7 +25,7 @@ router.post("/signup", cors(corsOptions), async (req, res, next) => {
     const {username, email, password, role} = req.body
 
     if(!username || !email || !password) {
-        res.status(400).json({errorMessage: "Debes rellenar todos los campos"})
+        res.status(400).json({errorMessage: "Debes rellenar todos los campos"}).sendStatus(200)
         return;
     }
 
@@ -40,14 +40,14 @@ router.post("/signup", cors(corsOptions), async (req, res, next) => {
         const foundUserByUsername = await User.findOne({username: username})
         console.log(foundUserByUsername)
         if (foundUserByUsername !== null) {
-            res.status(400).json({errorMessage: "Ya existe un usuario con este nombre"})
+            res.status(400).json({errorMessage: "Ya existe un usuario con este nombre"}).sendStatus(200)
             return;
         }
 
         const foundUser = await User.findOne({email: email})
         console.log(foundUser)
         if (foundUser !== null) {
-            res.status(400).json({errorMessage: "Ya existe un usuario con este email"})
+            res.status(400).json({errorMessage: "Ya existe un usuario con este email"}).sendStatus(200)
             return;
         }
 
@@ -61,7 +61,7 @@ router.post("/signup", cors(corsOptions), async (req, res, next) => {
             password: hashPassword,
             role: role
         })
-        res.status(201).json()
+        res.status(201).json().sendStatus(200)
 
         //poner que el usuario tambien sea único
         
@@ -80,7 +80,7 @@ router.post("/login", cors(corsOptions), async (req, res, next) => {
     const {username, email, password, role} = req.body
 
     if(/* !username ||  */!email || !password) {
-        res.status(400).json({errorMessage: "Debes rellenar todos los campos"})
+        res.status(400).json({errorMessage: "Debes rellenar todos los campos"}).sendStatus(200)
         return;
     }
 
@@ -89,14 +89,14 @@ router.post("/login", cors(corsOptions), async (req, res, next) => {
         const foundUser = await User.findOne({email: email})
 
         if (foundUser === null) {
-            res.status(400).json({errorMessage: "Usuario no registrado"})
+            res.status(400).json({errorMessage: "Usuario no registrado"}).sendStatus(200)
             return;
         }
 
         const isPasswordValid = await bcrypt.compare(password, foundUser.password)
         console.log("isPasswordValid", isPasswordValid)
         if (isPasswordValid === false) {
-            res.status(400).json({errorMessage: "Contraseña incorrecta"})
+            res.status(400).json({errorMessage: "Contraseña incorrecta"}).sendStatus(200)
             return;
         }
 
@@ -116,7 +116,7 @@ router.post("/login", cors(corsOptions), async (req, res, next) => {
             {algorithm: "HS256", expiresIn: "24h"}
         )
 
-        res.json({authToken: authToken})
+        res.json({authToken: authToken}).sendStatus(200)
 
     } catch (error) {
         next(error)
@@ -129,7 +129,7 @@ router.get("/verify", isAuthenticated, cors(corsOptions), (req, res, next) => {
     console.log("aquí verificamos el token")
     console.log("consoleLog", req.payload)
 
-    res.json(req.payload)
+    res.json(req.payload).sendStatus(200)
 }) 
 
 
